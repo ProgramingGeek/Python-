@@ -10,8 +10,11 @@ enemieshp = 100
 inventory = {}
 loots = ['Normal Chest','Rare Chest']
 treasure = random.choice(loots)
-wait = time.sleep(0.7)
 
+
+def wait():
+  time.sleep(0.7)
+  
 
 def level():
   """Level Up"""
@@ -127,26 +130,39 @@ def close():
   if treasure == loots[1]:
     clrare()
   
+
+def reset():
+  global playerhp,enemieshp
+  if playerhp <= 0 and enemieshp >= 0:
+    playerhp = 100
+  if enemieshp <= 0 and enemieshp >= 0:
+    enemieshp = 100
+  
   
 def loot():
+  global Loot
+  reset()
+  Loot = True
   while Loot:
     response = input('Do you want to open/keep the treasure ').lower()
     if response == 'open':
       chest()
+      Loot = False
     elif response == 'close':
       close()
+      Loot = False
     
 
 def start():
   while game:
-    global enemieshp,playerhp,wait
+    global enemieshp,playerhp
     response = input('Welcome to text game (Fight/f) (quit/q)').lower()
     if response == "fight" or response == "f":
-      while enemieshp > 0 and playerhp > 0
+      while enemieshp > 0 and playerhp > 0:
         fight = input('Attack/a').lower()
         if fight == "attack" or fight == 'a':
             player()
-            wait
+            wait()
             enemies()
       if enemieshp <= 0:
         loot()
@@ -154,5 +170,6 @@ def start():
         print('You Win')
       if playerhp <= 0:
         print('You Lose')
+        reset()
         
 start()

@@ -142,7 +142,7 @@ def start():
     global enemieshp,playerhp,wait
     response = input('Welcome to text game (Fight/f) (quit/q)').lower()
     if response == "fight" or response == "f":
-      while enemieshp > 0 or playerhp > 0:
+      while enemieshp > 0 and playerhp > 0
         fight = input('Attack/a').lower()
         if fight == "attack" or fight == 'a':
             player()

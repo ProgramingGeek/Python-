@@ -1,5 +1,6 @@
 import random
 
+game = False
 Loot = False
 level = 0
 exp = 250
@@ -18,25 +19,46 @@ def level():
     level += 1
 
 
+def checkhp():
+  global playerhp,enemieshp
+  if playerhp <= 0:
+    playerhp = 0
+  if enemieshp <= 0:
+    enemieshp = 0
+
+
 def enemies():
   """enemies"""
-  print('Attack')
+  global playerhp
+  print('Attack!\n')
   plhp = random.randint(1,20)
   if plhp <= 14:
     playerhp -= plhp
+    checkhp()
   elif plhp >= 15:
     playerhp -= plhp
     print('Critical Hit!')
-      
-      
+    checkhp()
+    
+  print(f'Damage: {plhp}')
+  checkhp()
+  print(f'PlayerHp: {playerhp}')
+  
+  
 def player():
-  print('Attack')
-  emhp = range(1,20)
+  global enemieshp
+  print('Attack!\n')
+  emhp = random.randint(1,20)
   if emhp <= 14:
     enemieshp -= emhp
+    checkhp()
   elif emhp >= 15:
     enemieshp -= emhp
     print('Critical Hit!')
+    checkhp()
+    
+  print(f'Damage: {emhp}')
+  print(f'EnemiesHp: {enemieshp}')
       
 
 def normal():
@@ -110,3 +132,19 @@ def loot():
       close()
     else:
       continue
+    
+
+def start():
+  while game:
+    global enemieshp,playerhp
+    response = input('Welcome to text game (Fight/f) (quit/q)').lower()
+    if response == "fight" or response == "f":
+      while playerhp > 0 or enemieshp > 0:
+        fight = input('Attack/a').lower()
+        if fight == "Attack" or fight == 'a':
+          player()
+          enemies()
+      if enemieshp <= 0:
+        loot()
+        
+start()

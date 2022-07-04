@@ -1,4 +1,4 @@
-import random,time
+import random,time,sys
 
 game = False
 Loot = False
@@ -171,5 +171,7 @@ def start():
       if playerhp <= 0:
         print('You Lose')
         reset()
+    elif response == "quit" or response == "q":
+        sys.exit()
         
 start()

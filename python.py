@@ -142,13 +142,17 @@ def start():
     global enemieshp,playerhp,wait
     response = input('Welcome to text game (Fight/f) (quit/q)').lower()
     if response == "fight" or response == "f":
-      while playerhp > 0 or enemieshp > 0:
+      while enemieshp > 0 or playerhp > 0:
         fight = input('Attack/a').lower()
-        if fight == "Attack" or fight == 'a':
-          player()
-          wait
-          enemies()
+        if fight == "attack" or fight == 'a':
+            player()
+            wait
+            enemies()
       if enemieshp <= 0:
         loot()
+      if enemieshp <= 0:
+        print('You Win')
+      if playerhp <= 0:
+        print('You Lose')
         
 start()

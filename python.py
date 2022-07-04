@@ -133,7 +133,7 @@ def close():
 
 def reset():
   global playerhp,enemieshp
-  if playerhp <= 0 and enemieshp >= 0:
+  if playerhp <= 0 and playerhp >= 0:
     playerhp = 100
   if enemieshp <= 0 and enemieshp >= 0:
     enemieshp = 100

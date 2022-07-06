@@ -16,7 +16,14 @@ def wait():
   time.sleep(0.7)
   
 
-def level():
+def experience():
+    global exp
+    experienceup = random.randint(100,300)
+    exp += experienceup
+    levelup()
+    
+    
+def levelup():
   """Level Up"""
   global exp,required,level
   if exp >= required:
@@ -25,6 +32,7 @@ def level():
 
 
 def checkhp():
+  """Check The Health"""
   global playerhp,enemieshp
   if playerhp <= 0:
     playerhp = 0
@@ -33,7 +41,7 @@ def checkhp():
 
 
 def enemies():
-  """enemies"""
+  """enemies attack"""
   global playerhp,enemieshp
   if enemieshp > 0:
     print('Attack!\n')
@@ -51,6 +59,7 @@ def enemies():
   
   
 def player():
+  """player attack"""
   global enemieshp,playerhp
   if playerhp > 0:
     print('Attack!\n')
@@ -68,6 +77,7 @@ def player():
       
 
 def normal():
+  """normal chest"""
   if 'Coin' not in inventory:
     inventory['Coin'] = 5
   else:
@@ -83,6 +93,7 @@ def normal():
   
   
 def rare():
+  """rare chest"""
   if 'Coin' not in inventory:
     inventory['Coin'] = 26
   else:
@@ -109,52 +120,52 @@ def clnormal():
   
   
 def clrare():
-  if 'Rare Chest' not in inventory:
-    inventory['Rare Chest'] = 1
-  else:
-    inventory['Rare Chest'] += 1
+    if 'Rare Chest' not in inventory:
+        inventory['Rare Chest'] = 1
+    else:
+        inventory['Rare Chest'] += 1
 
 
 def chest():
-  global treasure,loots
-  if treasure == loots[0]:
-    normal()
-  if treasure == loots[1]:
-    rare()
+    global treasure,loots
+    if treasure == loots[0]:
+        normal()
+    if treasure == loots[1]:
+        rare()
     
     
 def close():
-  global treasure,loots
-  if treasure == loots[0]:
-    clnormal()
-  if treasure == loots[1]:
-    clrare()
+    global treasure,loots
+    if treasure == loots[0]:
+        clnormal()
+    if treasure == loots[1]:
+        clrare()
   
 
 def reset():
-  global playerhp,enemieshp
-  if playerhp <= 0 and playerhp >= 0:
-    playerhp = 100
-  if enemieshp <= 0 and enemieshp >= 0:
-    enemieshp = 100
+    global playerhp,enemieshp
+    if playerhp <= 0 and playerhp >= 0:
+        playerhp = 100
+    if enemieshp <= 0 and enemieshp >= 0:
+        enemieshp = 100
   
   
 def loot():
-  global Loot
-  reset()
-  Loot = True
-  while Loot:
-    response = input('Do you want to open/keep the treasure ').lower()
-    if response == 'open':
-      chest()
-      Loot = False
-    elif response == 'close':
-      close()
-      Loot = False
+    global Loot
+    reset()
+    Loot = True
+    while Loot:
+        response = input('Do you want to open/keep the treasure ').lower()
+        if response == 'open':
+            chest()
+            Loot = False
+        elif response == 'close':
+            close()
+            Loot = False
     
 
 def start():
-  while game:
+    while game:
     global enemieshp,playerhp
     response = input('Welcome to text game (Fight/f) (quit/q)').lower()
     if response == "fight" or response == "f":

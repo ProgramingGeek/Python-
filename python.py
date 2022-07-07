@@ -46,9 +46,9 @@ def checkhp():
 def enemies():
     """enemies attack"""
     global playerhp,enemieshp
+    plhp = random.randint(1,21)
     if enemieshp > 0:
         print('Attack!\n')
-        plhp = random.randint(1,20)
     if plhp <= 14:
         playerhp -= plhp
         checkhp()
@@ -64,7 +64,7 @@ def enemies():
 def player():
     """player attack"""
     global enemieshp,playerhp
-    emhp = random.randint(1,20)
+    emhp = random.randint(1,21)
     if playerhp > 0:
         print('Attack!\n')
     if emhp <= 14:
@@ -131,7 +131,7 @@ def createprog():
         print()
     else:
         with open(progress_exp,'w') as fff:
-        fff.write("")
+        	fff.write("")
     
     
 def clnormal():
@@ -209,35 +209,35 @@ def load():
 def save():
     global exp,level,progress_items,progress_exp,progress_level
     if inventory > 0:
-        with open(progress_items,'w') as f:
-            for k,v in inventory.items():
-                i = f'{k},{int(v)}\n'
-                f.write(i)
-        with open(progress_exp,'w') as ff:
-            ff.write(exp)
-        with open(progress_level,'w') as fff:
-            fff.write(level)
+      with open(progress_items,'w') as f:
+        for k,v in inventory.items():
+          i = f'{k},{int(v)}\n'
+          f.write(i)
+      with open(progress_exp,'w') as ff:
+        ff.write(exp)
+      with open(progress_level,'w') as fff:
+        fff.write(level)
     
     
 def start():
     while game:
-    global enemieshp,playerhp
-    response = input('Welcome to text game (Fight/f) (quit/q)').lower()
-    if response == "fight" or response == "f":
-      while enemieshp > 0 and playerhp > 0:
-        fight = input('Attack/a').lower()
-        if fight == "attack" or fight == 'a':
-            player()
-            wait()
-            enemies()
-      if enemieshp <= 0:
-        loot()
-      if enemieshp <= 0:
-        print('You Win')
-      if playerhp <= 0:
-        print('You Lose')
-        reset()
-    elif response == "quit" or response == "q":
-        sys.exit()
+    	global enemieshp,playerhp
+    	response = input('Welcome to text game (Fight/f) (quit/q)').lower()
+    	if response == "fight" or response == "f":
+    	  while enemieshp > 0 and playerhp > 0:
+    			fight = input('Attack/a').lower()
+    			if fight == "attack" or fight == 'a':
+    			  player()
+    				wait()
+    				enemies()
+    		if enemieshp <= 0:
+    			loot()
+    		if enemieshp <= 0:
+    			print('You Win')
+    		if playerhp <= 0:
+    			print('You Lose')
+    			reset()
+    	elif response == "quit" or response == "q":
+    		sys.exit()
         
 start()

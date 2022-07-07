@@ -189,30 +189,33 @@ def loot():
 def load():
     global progress_items,progress_level,progress_exp,exp,level
     createprog()
-    with open(progress_items) as f:
-        for line in f:
-            k,v = f.strip()
-            inventory[k] = v
-    with open(progress_level) as ff:
-        for lvl in ff:
-            lvl = int(lvl)
-            level += lvl
-    with open(progress_exp) as fff:
-        for expp in fff:
-            expp = int(expp)
-            exp += expp
+    if inventory <= 0:
+        with open(progress_items) as f:
+            for line in f:
+                k,v = f.strip()
+                inventory[k] = int(v)
+    if level <= 0:
+        with open(progress_level) as ff:
+            for lvl in ff:
+                lvl = int(lvl)
+                level += lvl
+    if exp <= 0:
+        with open(progress_exp) as fff:
+            for expp in fff:
+                expp = int(expp)
+                exp += expp
         
     
 def save():
     global exp,level,progress_items,progress_exp,progress_level
     if inventory > 0:
-        with open(progress_items) as f:
+        with open(progress_items,'w') as f:
             for k,v in inventory.items():
                 i = f'{k},{int(v)}\n'
                 f.write(i)
-        with open(progress_exp) as ff:
+        with open(progress_exp,'w') as ff:
             ff.write(exp)
-        with open(progress_level) as fff:
+        with open(progress_level,'w') as fff:
             fff.write(level)
     
     

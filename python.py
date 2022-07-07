@@ -1,4 +1,4 @@
-import random,time,sys
+import random,time,sys,os
 
 game = False
 Loot = False
@@ -10,10 +10,13 @@ enemieshp = 100
 inventory = {}
 loots = ['Normal Chest','Rare Chest']
 treasure = random.choice(loots)
+progress_items = '/storage/emulated/0/progress/items.json'
+progress_level = '/storage/emulated/0/progress/level.json'
+progress_exp = '/storage/emulated/0/progress/exp.json'
 
 
 def wait():
-  time.sleep(0.7)
+    time.sleep(0.7)
   
 
 def experience():
@@ -24,46 +27,46 @@ def experience():
     
     
 def levelup():
-  """Level Up"""
-  global exp,required,level
-  if exp >= required:
-    required += 300
-    level += 1
+    """Level Up"""
+    global exp,required,level
+    if exp >= required:
+        required += 300
+        level += 1
 
 
 def checkhp():
-  """Check The Health"""
-  global playerhp,enemieshp
-  if playerhp <= 0:
-    playerhp = 0
-  if enemieshp <= 0:
-    enemieshp = 0
+    """Check The Health"""
+    global playerhp,enemieshp
+    if playerhp <= 0:
+        playerhp = 0
+    if enemieshp <= 0:
+        enemieshp = 0
 
 
 def enemies():
-  """enemies attack"""
-  global playerhp,enemieshp
-  if enemieshp > 0:
-    print('Attack!\n')
-    plhp = random.randint(1,20)
+    """enemies attack"""
+    global playerhp,enemieshp
+    if enemieshp > 0:
+        print('Attack!\n')
+        plhp = random.randint(1,20)
     if plhp <= 14:
-      playerhp -= plhp
-      checkhp()
+        playerhp -= plhp
+        checkhp()
     elif plhp >= 15:
-      playerhp -= plhp
-      print('Critical Hit!')
-      checkhp()
+        playerhp -= plhp
+        print('Critical Hit!')
+        checkhp()
       
     print(f'Damage: {plhp}')
     print(f'PlayerHp: {playerhp}')
   
   
 def player():
-  """player attack"""
-  global enemieshp,playerhp
-  if playerhp > 0:
-    print('Attack!\n')
+    """player attack"""
+    global enemieshp,playerhp
     emhp = random.randint(1,20)
+    if playerhp > 0:
+        print('Attack!\n')
     if emhp <= 14:
       enemieshp -= emhp
       checkhp()
@@ -111,7 +114,26 @@ def rare():
   else:
     inventory['Sword'] += 1
   
-  
+
+def createprog():
+    global progress_items,progress_level,progress_exp
+    if os.path.exists(progress_items):
+        print()
+    else:
+        with open(progress_items,'w') as f:
+            f.write("")
+    if os.path.exists(progress_level):
+        print()
+    else:
+        with open(progress_level,'w') as ff:
+            ff.write("")
+    if os.path.exists(progress_exp):
+        print()
+    else:
+        with open(progress_exp,'w') as fff:
+        fff.write("")
+    
+    
 def clnormal():
   if 'Normal Chest' not in inventory:
     inventory['Normal Chest'] = 1
@@ -164,6 +186,36 @@ def loot():
             Loot = False
     
 
+def load():
+    global progress_items,progress_level,progress_exp,exp,level
+    createprog()
+    with open(progress_items) as f:
+        for line in f:
+            k,v = f.strip()
+            inventory[k] = v
+    with open(progress_level) as ff:
+        for lvl in ff:
+            lvl = int(lvl)
+            level += lvl
+    with open(progress_exp) as fff:
+        for expp in fff:
+            expp = int(expp)
+            exp += expp
+        
+    
+def save():
+    global exp,level,progress_items,progress_exp,progress_level
+    if inventory > 0:
+        with open(progress_items) as f:
+            for k,v in inventory.items():
+                i = f'{k},{int(v)}\n'
+                f.write(i)
+        with open(progress_exp) as ff:
+            ff.write(exp)
+        with open(progress_level) as fff:
+            fff.write(level)
+    
+    
 def start():
     while game:
     global enemieshp,playerhp

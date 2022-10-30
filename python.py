@@ -228,16 +228,16 @@ def start():
     			fight = input('Attack/a').lower()
     			if fight == "attack" or fight == 'a':
     			  player()
-    				wait()
-    				enemies()
-    		if enemieshp <= 0:
-    			loot()
-    		if enemieshp <= 0:
-    			print('You Win')
-    		if playerhp <= 0:
-    			print('You Lose')
-    			reset()
+    	                  wait()
+    		          enemies()
+    		        if enemieshp <= 0:
+    			  loot()
+    		        if enemieshp <= 0:
+    			  print('You Win')
+    		        if playerhp <= 0:
+    			  print('You Lose')
+    			  reset()
     	elif response == "quit" or response == "q":
-    		sys.exit()
+          sys.exit()
         
 start()
